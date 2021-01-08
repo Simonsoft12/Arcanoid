@@ -25,7 +25,7 @@ var brickHeight = 20;
 var brickWidth = 60;
 var brickPadding = 5;
 var brickTopOffset = 10;
-var brickLeftOffset = 15;
+var brickLeftOffset = 26;
 
 var keys = {};
 var bricks = {};
