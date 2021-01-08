@@ -8,7 +8,7 @@ var panelX = 300;
 var panelY = 590;
 var panelWidth = 100;
 var panelHeight = 10;
-var panelSpeed = 7;
+var panelSpeed = 8;
 
 var ballRadius = 7;
 const BALL_RADIUS = 8;
@@ -53,22 +53,6 @@ window.addEventListener('keyup', function (e) {
     delete keys[e.keyCode];
 });
 
-function drawBall() {
-    ctx.beginPath();
-    ctx.arc(ballX, ballY, ballRadius, 0, BALL_RADIUS);
-    ctx.fillStyle = "darkblue";
-    ctx.fill();
-    ctx.closePath();
-}
-
-function drawPanel() {
-    ctx.beginPath();
-    ctx.rect(panelX, panelY, panelWidth, panelHeight);
-    ctx.fillStyle = 'red';
-    ctx.fill();
-    ctx.closePath();
-}
-
 function drawBricks() {
     for (c = 0; c < cols; c++) {
         for (r = 0; r < rows; r++) {
@@ -85,6 +69,22 @@ function drawBricks() {
             }
         }
     }
+}
+
+function drawPanel() {
+    ctx.beginPath();
+    ctx.rect(panelX, panelY, panelWidth, panelHeight);
+    ctx.fillStyle = 'red';
+    ctx.fill();
+    ctx.closePath();
+}
+
+function drawBall() {
+    ctx.beginPath();
+    ctx.arc(ballX, ballY, ballRadius, 0, BALL_RADIUS);
+    ctx.fillStyle = "darkblue";
+    ctx.fill();
+    ctx.closePath();
 }
 
 function ballPaddleCollision(){
