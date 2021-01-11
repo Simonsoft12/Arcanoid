@@ -116,7 +116,7 @@ function handleOrientation(e) {
     var y = e.beta;  // range [-180,180], top-bottom
     var z = e.alpha; // range [0,360], up-down
     
-    panelX -= x*0.3;
+    panelX -= x*0.35;
 }
 
 function draw() {
