@@ -6,8 +6,8 @@ canvas.height = 600;
 
 var panelX = 300;
 var panelY = 590;
-var panelWidth = 100;
-var panelHeight = 10;
+var panelWidth = 200;
+var panelHeight = 20;
 var panelSpeed = 8;
 
 var ballRadius = 7;
@@ -115,7 +115,7 @@ function handleOrientation(e) {
     var x = e.gamma; // range [-90,90], left-right
     var y = e.beta;  // range [-180,180], top-bottom
     var z = e.alpha; // range [0,360], up-down
-    panelX += x*0.5;
+    panelX += x*0.1;
 }
 
 function draw() {
