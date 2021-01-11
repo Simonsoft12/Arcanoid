@@ -109,7 +109,14 @@ function collisionDetection() {
         }
     }
 }
+window.addEventListener("deviceorientation", handleOrientation, true);
 
+function handleOrientation(e) {
+    var x = e.gamma; // range [-90,90], left-right
+    var y = e.beta;  // range [-180,180], top-bottom
+    var z = e.alpha; // range [0,360], up-down
+    panelX += x;
+}
 
 function draw() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
