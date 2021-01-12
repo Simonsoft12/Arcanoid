@@ -129,7 +129,7 @@ function handleOrientation(e) {
             panelX += x*0.35;
         }
         else if(x < 0 && panelX > 0) {
-            panelX -= x*0.35;
+            panelX += x*0.35;
         }
     }
 }
