@@ -24,7 +24,7 @@ var cols = 10;
 var brickHeight = 20;
 var brickWidth = 60;
 var brickPadding = 5;
-var brickTopOffset = 50;
+var brickTopOffset = 65;
 var brickLeftOffset = 25;
 
 var score = 0;
@@ -124,10 +124,10 @@ function handleOrientation(e) {
     z = e.alpha; // range [0,360], up-down
     
     if(window.innerHeight < window.innerWidth){
-        if (y > 0 && panelX + panelHeight < canvas.height) { 
-            panelX += y*0.35;
+        if (y > 0 && panelX + panelWidth < canvas.height) { 
+            panelX += y*0.15;
         } else if(y < 0 && panelX > 0){
-            panelX += y*0.35;
+            panelX += y*0.15;
         }
     } else {
         if (x > 0 && panelX + panelWidth < canvas.width) { 
@@ -145,7 +145,7 @@ function draw() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.font = "24px Arial";
     ctx.fillStyle = "red";
-    ctx.fillText('Score : '+score, canvas.width/2-40, 30);
+    ctx.fillText('Score : '+score, canvas.width/2-40, 50);
 
     drawBricks();
     drawPanel();
