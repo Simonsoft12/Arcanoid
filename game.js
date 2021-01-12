@@ -18,14 +18,16 @@ var speedY = -3;
 var speedX = 3;
 var ballAngle = 0;
 
-var rows = 15;
+var rows = 12;
 var cols = 10;
 
 var brickHeight = 20;
 var brickWidth = 60;
 var brickPadding = 5;
-var brickTopOffset = 10;
+var brickTopOffset = 50;
 var brickLeftOffset = 25;
+
+var score = 0;
 
 var x = 0;
 var y = 0;
@@ -108,6 +110,7 @@ function collisionDetection() {
                      ballY + BALL_RADIUS > b.y && ballY - BALL_RADIUS < b.y + brickHeight) {
                     speedY = -speedY;
                     b.status = 0;
+                    score++;
                 }
             }
         }
@@ -119,11 +122,13 @@ function handleOrientation(e) {
     x = e.gamma; // range [-90,90], left-right
     y = e.beta;  // range [-180,180], top-bottom
     z = e.alpha; // range [0,360], up-down
-
-    var tempX;
     
     if(window.innerHeight < window.innerWidth){
-        panelX += y*0.35;
+        if (y > 0 && panelX + panelHeight < canvas.height) { 
+            panelX += y*0.35;
+        } else if(y < 0 && panelX > 0){
+            panelX += y*0.35;
+        }
     } else {
         if (x > 0 && panelX + panelWidth < canvas.width) { 
             panelX += x*0.35;
@@ -138,10 +143,9 @@ function handleOrientation(e) {
 
 function draw() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.font = "30px Arial";
+    ctx.font = "24px Arial";
     ctx.fillStyle = "red";
-    ctx.fillText(panelX, 300, 450);
-    ctx.fillText(x, 300, 500);
+    ctx.fillText('Score : '+score, canvas.width/2-40, 30);
 
     drawBricks();
     drawPanel();
