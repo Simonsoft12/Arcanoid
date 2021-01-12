@@ -27,6 +27,10 @@ var brickPadding = 5;
 var brickTopOffset = 10;
 var brickLeftOffset = 25;
 
+var x = 0;
+var y = 0;
+var z = 0;
+
 var keys = {};
 var bricks = {};
 
@@ -112,9 +116,10 @@ function collisionDetection() {
 window.addEventListener("deviceorientation", handleOrientation, true);
 
 function handleOrientation(e) {
-    var x = e.gamma; // range [-90,90], left-right
-    var y = e.beta;  // range [-180,180], top-bottom
-    var z = e.alpha; // range [0,360], up-down
+    x = e.gamma; // range [-90,90], left-right
+    y = e.beta;  // range [-180,180], top-bottom
+    z = e.alpha; // range [0,360], up-down
+
     
     if(window.innerHeight < window.innerWidth){
         panelX += y*0.35;
@@ -130,6 +135,10 @@ function draw() {
     ctx.font = "30px Arial";
     ctx.fillStyle = "red";
     ctx.fillText(panelX, 300, 450);
+    ctx.fillText(x, 300, 500);
+    ctx.fillText(y, 400, 500);
+    ctx.fillText(z, 500, 500);
+
     drawBricks();
     drawPanel();
     drawBall();
