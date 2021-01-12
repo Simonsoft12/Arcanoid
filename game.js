@@ -120,12 +120,17 @@ function handleOrientation(e) {
     y = e.beta;  // range [-180,180], top-bottom
     z = e.alpha; // range [0,360], up-down
 
+    var tempX;
     
     if(window.innerHeight < window.innerWidth){
         panelX += y*0.35;
     } else {
-        if (panelX > 4 && panelX < 368 ) panelX += x*0.35;
-        if (panelX > 368 && panelX < 4) panelX -= x*0.35;
+        if (x > 0 && panelX + panelWidth < canvas.width) { 
+            panelX += x*0.35;
+        }
+        else if(x < 0 && panelX > 0) {
+            panelX -= x*0.35;
+        }
     }
 }
 
