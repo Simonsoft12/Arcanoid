@@ -119,7 +119,7 @@ function handleOrientation(e) {
     if(window.innerHeight < window.innerWidth){
         panelX += y*0.35;
     } else {
-        if (panelX < 90 ) panelX += x*0.35;
+        if (panelX < 670 ) panelX += x*0.35;
     }
 }
 
