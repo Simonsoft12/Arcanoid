@@ -117,9 +117,9 @@ function handleOrientation(e) {
     var z = e.alpha; // range [0,360], up-down
     
     if(window.innerHeight < window.innerWidth){
-        if (panelX + panelWidth + panelSpeed < canvas.height) panelX += y*0.35;
+        if (panelX + panelWidth + panelSpeed <= canvas.width) panelX += y*0.35;
     } else {
-        if (panelX + panelWidth + panelSpeed < canvas.width) panelX += x*0.35;
+        if (panelX + panelWidth + panelSpeed <= canvas.width) panelX += x*0.35;
     }
 }
 
