@@ -6,7 +6,7 @@ canvas.height = 600;
 
 var panelX = 300;
 var panelY = 590;
-var panelWidth = 200;
+var panelWidth = 300;
 var panelHeight = 20;
 var panelSpeed = 8;
 
