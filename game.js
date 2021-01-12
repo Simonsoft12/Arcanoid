@@ -6,7 +6,7 @@ canvas.height = 600;
 
 var panelX = 300;
 var panelY = 590;
-var panelWidth = 200;
+var panelWidth = 300;
 var panelHeight = 20;
 var panelSpeed = 8;
 
@@ -122,7 +122,7 @@ function handleOrientation(e) {
         if (panelX + panelWidth + panelSpeed < canvas.width) { 
             panelX += x*0.35;
         } else {
-            if( x >= -90 && x <= 0) panelX -= x*0.35;
+            if( x <= 90 && x >= 0) panelX -= x*0.35;
         }
     }
 }
