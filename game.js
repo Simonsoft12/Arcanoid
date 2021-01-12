@@ -124,7 +124,8 @@ function handleOrientation(e) {
     if(window.innerHeight < window.innerWidth){
         panelX += y*0.35;
     } else {
-        if (panelX < 364 ) panelX += x*0.35;
+        if (panelX > 4 && panelX < 364 ) panelX += x*0.35;
+        
     }
 }
 
@@ -136,8 +137,6 @@ function draw() {
     ctx.fillStyle = "red";
     ctx.fillText(panelX, 300, 450);
     ctx.fillText(x, 300, 500);
-    ctx.fillText(y, 400, 500);
-    ctx.fillText(z, 500, 500);
 
     drawBricks();
     drawPanel();
