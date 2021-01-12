@@ -4,6 +4,10 @@ var ctx = canvas.getContext('2d');
 canvas.width = 670;
 canvas.height = 600;
 
+const scoreEl = document.querySelector('#scoreEl');
+const startGameBtn = document.querySelector('#startGameBtn');
+const modalEl = document.querySelector('#modalEl');
+
 var panelX = 300;
 var panelY = 590;
 var panelWidth = 250;
@@ -111,6 +115,7 @@ function collisionDetection() {
                     speedY = -speedY;
                     b.status = 0;
                     score++;
+                    scoreEl.innerHTML = score;
                 }
             }
         }
@@ -174,4 +179,8 @@ function game() {
     draw();
     window.requestAnimationFrame(game);
 }
-game();
+
+startGameBtn.addEventListener('click', () => {
+    game();
+    modalEl.style.display = 'none';
+})
