@@ -119,15 +119,17 @@ function handleOrientation(e) {
     if(window.innerHeight < window.innerWidth){
         panelX += y*0.35;
     } else {
-        if (panelX < 670 ) panelX += x*0.35;
+        if (panelX < 364 ) panelX += x*0.35;
     }
 }
-ctx.font = "30px Arial";
+
 
 
 function draw() {
-    ctx.fillText(panelX, 300, 450);
     ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.font = "30px Arial";
+    ctx.fillStyle = "red";
+    ctx.fillText(panelX, 300, 450);
     drawBricks();
     drawPanel();
     drawBall();
