@@ -197,7 +197,7 @@ function draw() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.font = "24px Arial";
     ctx.fillStyle = "red";
-    ctx.fillText('Score : '+score, canvas.width/2-40, 50);
+    ctx.fillText('Score : '+Score, canvas.width/2-40, 50);
 
     drawBricks();
     drawPanel();
@@ -207,8 +207,9 @@ function draw() {
 
         // Game over
     if(ballY >= 600){
+        cancelAnimationFrame(game);
         modalEl.style.display = 'flex';
-        cancelAnimationFrame(game());
+        ballY = 620;
     }
 
     if(ballX + speedX > canvas.width-ballRadius || ballX + speedX < ballRadius) {
