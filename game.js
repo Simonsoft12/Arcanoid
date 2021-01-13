@@ -197,7 +197,7 @@ function draw() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.font = "24px Arial";
     ctx.fillStyle = "red";
-    ctx.fillText('Score : '+Score, canvas.width/2-40, 50);
+    ctx.fillText('Score : '+score, canvas.width/2-40, 50);
 
     drawBricks();
     drawPanel();
