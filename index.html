@@ -24,12 +24,31 @@
             <div>
                 <button class="bg-blue-500 text-white w-full py-3 rounded-full text-sm"
                 id ="startGameBtn">Start Game</button>
+                <button onclick="requestDeviceOrientation()" 
+                class="bg-gray-500 text-white w-full py-3 mt-4 rounded-full text-sm"
+                id ="givePermissionBtn">Give permission</button>
             </div>
         </div>
     </div>
 
     <canvas id="canvas"></canvas>
 
+    <script>
+		function requestDeviceOrientation() {
+			if (typeof DeviceOrientationEvent !== 'function') {
+				return setResult('DeviceOrientationEvent not detected')
+			}
+			if (typeof DeviceOrientationEvent.requestPermission !== 'function') {
+				return setResult('DeviceOrientationEvent.requestPermission not detected')
+			}
+			DeviceOrientationEvent.requestPermission().then(function(result) {
+				return setResult(result);});
+			}
+
+			function setResult(result) {
+			document.getElementById('result').innerHTML = 'RESULT: ' + result;
+		}
+	</script>
     <script src="game.js" defer></script>
 </body>
 </html>

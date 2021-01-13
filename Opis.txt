@@ -1,0 +1,22 @@
+Gra arkanoid
+
+Udało mi się zrobić  dynamiczną zmianę wielkości Canvas w zależności od rozmiarów ekranu. 
+Obraz również po przejściu w tryb landscape scaluje sie do rozdzielczości i cegły są rozciągnięte, tak jak powinny.
+
+Chyba udało mi się zrobić gre w całości. 
+
+Najwięcej problemu miałem z dostosowaniem matematyki aby
+przesuwać wiosło ( którym odbijamy piłeczke ) używając akcelerometru, chwilę męczyłem się z tym żeby nie wyjeżdżała
+poza canvas, ale to czysta matematyka.
+
+Okazało się żeby użyc akcelerometru(żyroskopu) wystarczy kilka linijek kodu :
+
+	window.addEventListener("deviceorientation", handleOrientation, true);
+
+	function handleOrientation(e) {
+    		x = e.gamma; // range [-90,90], left-right
+    		y = e.beta;  // range [-180,180], top-bottom
+    		z = e.alpha; // range [0,360], up-down
+
+    		(...)
+	}

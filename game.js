@@ -7,6 +7,7 @@ canvas.height = 600;
 const scoreEl = document.querySelector('#scoreEl');
 const startGameBtn = document.querySelector('#startGameBtn');
 const modalEl = document.querySelector('#modalEl');
+const givePermissionBtn = document.querySelector('#givePermissionBtn');
 
 var panelX = 300;
 var panelY = 590;
@@ -238,5 +239,6 @@ function game() {
 startGameBtn.addEventListener('click', () => {
     init();
     game();
+    givePermissionBtn.style.display = 'none';
     modalEl.style.display = 'none';
 })
