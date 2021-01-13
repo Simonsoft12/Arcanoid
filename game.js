@@ -15,7 +15,7 @@ var panelHeight = 20;
 var panelSpeed = 8;
 
 var ballRadius = 7;
-const BALL_RADIUS = 8;
+var BALL_RADIUS = 8;
 var ballX = 350;
 var ballY = 550;
 var speedY = -3;
@@ -39,6 +39,54 @@ var z = 0;
 
 var keys = {};
 var bricks = {};
+
+function init() {
+    panelX = 300;
+    panelY = 590;
+    panelWidth = 250;
+    panelHeight = 20;
+    panelSpeed = 8;
+
+    ballRadius = 7;
+    BALL_RADIUS = 8;
+    ballX = 350;
+    ballY = 550;
+    speedY = -3;
+    speedX = 3;
+    ballAngle = 0;
+
+    rows = 12;
+    cols = 10;
+
+    brickHeight = 20;
+    brickWidth = 60;
+    brickPadding = 5;
+    brickTopOffset = 65;
+    brickLeftOffset = 25;
+
+    score = 0;
+
+    x = 0;
+    y = 0;
+    z = 0;
+
+    keys = {};
+    bricks = {};
+
+    for (i = 0; i < cols; i++) {
+        bricks[i] = {};
+        for (j = 0; j < rows; j++) {
+            bricks[i][j] = { x: 0, y: 0, status: 1}
+        }
+    }
+    
+    for (i = 0; i < cols; i++) {
+        for (j = 0; j < rows; j++) {
+            bricks[i][j].color = 'rgb(' + Math.floor(Math.random() * 256) + ',' + 
+            Math.floor(Math.random() * 256) + ',' + Math.floor(Math.random() * 256) + ')';
+        }
+    }
+}
 
 for (i = 0; i < cols; i++) {
     bricks[i] = {};
@@ -145,7 +193,6 @@ function handleOrientation(e) {
 }
 
 
-
 function draw() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.font = "24px Arial";
@@ -157,6 +204,13 @@ function draw() {
     drawBall();
     collisionDetection();
     ballPaddleCollision();
+
+        // Game over
+    if(ballY >= 600){
+        modalEl.style.display = 'flex';
+        cancelAnimationFrame(game());
+    }
+
     if(ballX + speedX > canvas.width-ballRadius || ballX + speedX < ballRadius) {
         speedX = -speedX;
     }
@@ -181,6 +235,7 @@ function game() {
 }
 
 startGameBtn.addEventListener('click', () => {
+    init();
     game();
     modalEl.style.display = 'none';
 })
