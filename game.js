@@ -33,6 +33,7 @@ var brickTopOffset = 65;
 var brickLeftOffset = 25;
 
 var score = 0;
+var stop = 0;
 
 var x = 0;
 var y = 0;
@@ -66,6 +67,7 @@ function init() {
     brickLeftOffset = 25;
 
     score = 0;
+    stop = 0;
 
     x = 0;
     y = 0;
@@ -200,18 +202,19 @@ function draw() {
     ctx.fillStyle = "red";
     ctx.fillText('Score : '+score, canvas.width/2-40, 50);
 
+        // Game over
+    if(ballY >= 600){
+        cancelAnimationFrame(game);
+        modalEl.style.display = 'flex';
+        stop = 1;
+    } 
+    
+
     drawBricks();
     drawPanel();
     drawBall();
     collisionDetection();
     ballPaddleCollision();
-
-        // Game over
-    if(ballY >= 600){
-        cancelAnimationFrame(game);
-        modalEl.style.display = 'flex';
-        ballY = 620;
-    }
 
     if(ballX + speedX > canvas.width-ballRadius || ballX + speedX < ballRadius) {
         speedX = -speedX;
@@ -227,11 +230,13 @@ function draw() {
             panelX += panelSpeed;
         }
     }
+
     ballX += speedX;
     ballY += speedY;
 }
 
 function game() {
+    if( stop == 1) return;
     draw();
     window.requestAnimationFrame(game);
 }
