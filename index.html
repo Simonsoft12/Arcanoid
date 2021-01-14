@@ -1,41 +1,39 @@
 <!DOCTYPE html>
-<html lang="pl">
+<html lang="PL">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
-    <link rel="shortcut icon" href="arklogo.ico" type="image/x-icon" />
-    <title>Arcanoid Game</title>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+	<title>Poke Maze</title>
+	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+	<style>
+		body { 
+			margin: 0; 
+			background: #2B2E31 url(img/screen-bg.png) repeat;
+		} 
+	</style>
+			<script src="src/physics.min.js?v=1.1"></script>
+			<script src="src/Boot.js?v=1.1"></script>
+			<script src="src/Preload.js?v=1.1"></script>
+			<script src="src/Menu.js?v=1.1"></script>
+			<script src="src/Game.js?v=1.1"></script>
 </head>
 <body>
-    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
-   <style>
-       canvas { 
-        height: 95vh; 
-        width: 95vw; 
-        display: block;
-        overflow: hidden;
-        touch-action: manipulation;
-    }
-   </style>
-
-    <div class="fixed inset-0 flex items-center justify-center" id="modalEl">
-        <div class="bg-white max-w-md w-full p-6 text-center">
-            <h1 class="text-4xl font-bold leading-none" id="scoreEl">0</h1>
-            <p class="text-sm text-gray-700 mb-4">Points</p>
+	<link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+	<div class="fixed inset-0 flex items-center justify-center" id="modalEl">
+        <div class="bg-transparent max-w-md w-full p-6 text-center">
+            
             <div>
-                <button onclick="requestDeviceOrientation()" 
-                class="bg-yellow-500 text-white w-full py-3 mb-4 rounded-full text-sm"
+                <button onclick="testDeviceOrientation();" 
+                class="bg-yellow-500 text-white w-full py-3  rounded-full text-sm"
                 id ="givePermissionBtn">Give permission first!</button>
-                <button class="bg-blue-500 text-white w-full py-3 rounded-full text-sm"
-                id ="startGameBtn">Start Game</button>
             </div>
         </div>
     </div>
-
-    <canvas id="canvas"></canvas>
-
-    <script>
-		function requestDeviceOrientation() {
+	
+	<script>
+		function testDeviceOrientation() {
+			const modalEl = document.querySelector('#modalEl');
+			modalEl.style.display = 'none';
 			if (typeof DeviceOrientationEvent !== 'function') {
 				return setResult('DeviceOrientationEvent not detected')
 			}
@@ -50,6 +48,16 @@
 			document.getElementById('result').innerHTML = 'RESULT: ' + result;
 		}
 	</script>
-    <script src="game.js" defer></script>
+	<script>
+	(function() {
+		var game = new Phaser.Game(320, 480, Phaser.CANVAS, 'game');
+		game.state.add('Boot', Pokeball.Boot);
+		game.state.add('Preload', Pokeball.Preloader);
+		game.state.add('Menu', Pokeball.MainMenu);
+		game.state.add('Game', Pokeball.Game);
+		game.state.start('Boot');
+	})();
+</script>
+
 </body>
 </html>

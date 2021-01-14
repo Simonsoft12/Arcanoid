@@ -1,22 +1,17 @@
-Gra arkanoid
+Gra polega na trafieniu Pokeballem ( kulką ) do czarnej dziury w celu przedostania się do następnego poziomu.
+Po drodze możemy zbierać bonusy ( złote kule ) i musimy omijać bomby.
+Mogłem zrobić tak, że mamy kilka żyć i bonusy nam je odnawiają, ale stwiedziłem, że lepiej będzie jak gra będzie 
+trudna i trzeba będzie się troche namęczyć żeby dojść do końca, dlatego mamy tylko jedno życie i musimy nazbierać
+jak najwiecej złotych kul.
 
-Udało mi się zrobić  dynamiczną zmianę wielkości Canvas w zależności od rozmiarów ekranu. 
-Obraz również po przejściu w tryb landscape scaluje sie do rozdzielczości i cegły są rozciągnięte, tak jak powinny.
+Na samej górze mamy Menu, liczy się nam czas poziomu, punkty, podaje poziom oraz liczy ogólny czas gry. 
+Dodatkowo jest możliwość pauzy.
 
-Chyba udało mi się zrobić gre w całości. 
+Dynamiczne skalowanie rozdzielczości jest, jednak stwierdziłem, że nie ma sensu obracać gry jeśli wejdziemy w 
+landscape mode. Po prostu tak ma być, żeby wszystko ładnie było widać i było to grywalne.
 
-Najwięcej problemu miałem z dostosowaniem matematyki aby
-przesuwać wiosło ( którym odbijamy piłeczke ) używając akcelerometru, chwilę męczyłem się z tym żeby nie wyjeżdżała
-poza canvas, ale to czysta matematyka.
+Największym problemem okazało się dostosowanie gry na IOS'a, na Androida nie było problemów, natomiast
+z IOS'em trochę się męczyłem, jednak po wielu próbach, okazało się, że wcale nie jest to takie trudne,
+chociaż droga do tego była długa.
 
-Okazało się żeby użyc akcelerometru(żyroskopu) wystarczy kilka linijek kodu :
 
-	window.addEventListener("deviceorientation", handleOrientation, true);
-
-	function handleOrientation(e) {
-    		x = e.gamma; // range [-90,90], left-right
-    		y = e.beta;  // range [-180,180], top-bottom
-    		z = e.alpha; // range [0,360], up-down
-
-    		(...)
-	}
