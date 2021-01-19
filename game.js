@@ -34,6 +34,9 @@ var brickLeftOffset = 25;
 
 var score = 0;
 var stop = 0;
+var dzialko = 0;
+var executedTimer = false;
+let bullets = [];
 
 var x = 0;
 var y = 0;
@@ -68,6 +71,9 @@ function init() {
 
     score = 0;
     stop = 0;
+    dzialko = 0;
+    executedTimer = false;
+    bullets = [];
 
     x = 0;
     y = 0;
@@ -79,14 +85,25 @@ function init() {
     for (i = 0; i < cols; i++) {
         bricks[i] = {};
         for (j = 0; j < rows; j++) {
-            bricks[i][j] = { x: 0, y: 0, status: 1}
+            if(j == 10) {
+                bricks[i][j] = { x: 0, y: 0, status: 1, isspecial: 1}
+            } else {
+                bricks[i][j] = { x: 0, y: 0, status: 1, isspecial: 0}
+            }
         }
     }
+
+    
     
     for (i = 0; i < cols; i++) {
         for (j = 0; j < rows; j++) {
-            bricks[i][j].color = 'rgb(' + Math.floor(Math.random() * 256) + ',' + 
-            Math.floor(Math.random() * 256) + ',' + Math.floor(Math.random() * 256) + ')';
+            if(i == 0 && j == 10 || i == 1 && j == 10 || i == 2 && j == 10 || i == 3 && j == 10 || i == 4 && j == 10
+                || i == 5 && j == 10 || i == 6 && j == 10 || i == 7 && j == 10 || i == 8 && j == 10 || i == 9 && j == 10) {
+                bricks[i][j].color = 'rgb(' + 0 + ',' + 0 + ',' + 0 + ')';
+            } else {
+                bricks[i][j].color = 'rgb(' + Math.floor(Math.random() * 256) + ',' + 
+                Math.floor(Math.random() * 256) + ',' + Math.floor(Math.random() * 256) + ')';
+            }
         }
     }
 }
@@ -94,25 +111,112 @@ function init() {
 for (i = 0; i < cols; i++) {
     bricks[i] = {};
     for (j = 0; j < rows; j++) {
-        bricks[i][j] = { x: 0, y: 0, status: 1}
+        if(j == 10) {
+            bricks[i][j] = { x: 0, y: 0, status: 1, isspecial: 1}
+        } else {
+            bricks[i][j] = { x: 0, y: 0, status: 1, isspecial: 0}
+        }
     }
 }
 
 for (i = 0; i < cols; i++) {
     for (j = 0; j < rows; j++) {
-        bricks[i][j].color = 'rgb(' + Math.floor(Math.random() * 256) + ',' + 
-        Math.floor(Math.random() * 256) + ',' + Math.floor(Math.random() * 256) + ')';
+        if(i == 0 && j == 10 || i == 1 && j == 10 || i == 2 && j == 10 || i == 3 && j == 10 || i == 4 && j == 10
+            || i == 5 && j == 10 || i == 6 && j == 10 || i == 7 && j == 10 || i == 8 && j == 10 || i == 9 && j == 10) {
+            bricks[i][j].color = 'rgb(' + 0 + ',' + 0 + ',' + 0 + ')';
+        } else {
+            bricks[i][j].color = 'rgb(' + Math.floor(Math.random() * 256) + ',' + 
+            Math.floor(Math.random() * 256) + ',' + Math.floor(Math.random() * 256) + ')';
+        }
     }
 }
 
 window.addEventListener('keydown', function (e) {
+    let key = event.which
     keys[e.keyCode] = true;
     e.preventDefault();
+
+    if(key === 32 && dzialko == 1) {
+        // SPACJA - Strzelanie
+        bulletsPush();
+}
 });
+
+window.addEventListener('touchstart', process_touchstart, false);
+
+function process_touchstart(e){
+    if(dzialko == 1) {
+        bulletsPush();
+    }
+}
 
 window.addEventListener('keyup', function (e) {
     delete keys[e.keyCode];
 });
+
+function bulletsPush() {
+    bullets.push({  x: panelX-8, y: panelY-50 });
+    bullets.push({  x: panelX+196, y: panelY-50 });
+}
+
+function DrawBullets(){
+    for (let i in bullets) {
+        if (bullets.hasOwnProperty(i)) {
+          var image = document.getElementById("bullet");
+          ctx.drawImage(image, bullets[i].x, bullets[i].y);
+        }
+    }
+}
+
+function MoveBullets(){
+    for (let i in bullets) {
+        if (bullets.hasOwnProperty(i)) {
+            bullets[i].y -= 7;
+        }
+    }
+}
+
+function bulletHitBrick() {
+    for (let i in bullets) {
+        if (bullets.hasOwnProperty(i)){
+            for (c = 0; c < cols; c++) {
+                for (r = 0; r < rows; r++) {
+                    var b = bricks[c][r];
+                    if (b.status == 1) {
+                        if (bullets[i].x+20 > b.x && bullets[i].x+20 < b.x + brickWidth &&
+                            bullets[i].y > b.y && bullets[i].y < b.y + brickHeight) {
+                            b.status = 0;
+                            score++;
+                            scoreEl.innerHTML = score;
+                            bullets[i].x = 1000;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+function collisionDetection() {
+    for (c = 0; c < cols; c++) {
+        for (r = 0; r < rows; r++) {
+            var b = bricks[c][r];
+            if (b.status == 1) {
+                if (ballX + BALL_RADIUS > b.x && ballX - BALL_RADIUS < b.x + brickWidth &&
+                     ballY + BALL_RADIUS > b.y && ballY - BALL_RADIUS < b.y + brickHeight) {
+                    speedY = -speedY;
+                    b.status = 0;
+                    score++;
+                    scoreEl.innerHTML = score;
+                    if(b.isspecial == 1) {
+                        dzialko = 1;
+                        timerStart();
+                    }
+                }
+            }
+        }
+    }
+}
 
 function drawBricks() {
     for (c = 0; c < cols; c++) {
@@ -156,22 +260,6 @@ function ballPaddleCollision(){
     }
 }
 
-function collisionDetection() {
-    for (c = 0; c < cols; c++) {
-        for (r = 0; r < rows; r++) {
-            var b = bricks[c][r];
-            if (b.status == 1) {
-                if (ballX + BALL_RADIUS > b.x && ballX - BALL_RADIUS < b.x + brickWidth &&
-                     ballY + BALL_RADIUS > b.y && ballY - BALL_RADIUS < b.y + brickHeight) {
-                    speedY = -speedY;
-                    b.status = 0;
-                    score++;
-                    scoreEl.innerHTML = score;
-                }
-            }
-        }
-    }
-}
 window.addEventListener("deviceorientation", handleOrientation, true);
 
 function handleOrientation(e) {
@@ -195,6 +283,29 @@ function handleOrientation(e) {
     }
 }
 
+function timerStart() {
+    date1  = new Date();
+    executedTimer = true;
+  }
+  
+  function timerCheck() {
+    var date2  = new Date();
+    dateDiff = Math.abs(date1 - date2);
+    if(dateDiff >= 2000) {
+        date1 = date2;
+        dzialko = 0;
+    }
+  }
+
+  function drawDzialko() {
+    ctx.beginPath();
+    ctx.rect(panelX, panelY-40, 30, 50);
+    ctx.rect(panelX+220, panelY-40, 30, 50);
+    ctx.fillStyle = 'red';
+    ctx.fill();
+    ctx.closePath();
+  }
+
 
 function draw() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -209,12 +320,20 @@ function draw() {
         stop = 1;
     } 
     
-
+    DrawBullets();
+    MoveBullets();
+    bulletHitBrick();
     drawBricks();
     drawPanel();
     drawBall();
     collisionDetection();
     ballPaddleCollision();
+    if(dzialko == 1) { 
+        timerCheck();   
+        if(dateDiff <= 2000) {
+            drawDzialko();
+        }
+    }
 
     if(ballX + speedX > canvas.width-ballRadius || ballX + speedX < ballRadius) {
         speedX = -speedX;
