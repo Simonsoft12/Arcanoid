@@ -269,16 +269,16 @@ function handleOrientation(e) {
     
     if(window.innerHeight < window.innerWidth){
         if (y > 0 && panelX + panelWidth < canvas.width) { 
-            panelX += y*0.15;
+            panelX += y*0.25;
         } else if(y < 0 && panelX > 0){
-            panelX += y*0.15;
+            panelX += y*0.25;
         }
     } else {
         if (x > 0 && panelX + panelWidth < canvas.width) { 
-            panelX += x*0.35;
+            panelX += x*0.5;
         }
         else if(x < 0 && panelX > 0) {
-            panelX += x*0.35;
+            panelX += x*0.5;
         }
     }
 }
